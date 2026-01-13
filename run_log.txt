@@ -1,0 +1,30 @@
+[Starting NaviCard AI] 2026-01-14  1:51:00.93 
+d:\01_DevProjects\Python_Projects\NaviCard_AI\src\summarizer.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+=== NaviCard AI System Started ===
+[*] Starting news collection from 4 feeds...
+Processing: https://www.navalnews.com/feed/
+  -> Found 10 entries. Filtering...
+  [+] Match: HII Successfully Demonstrates Sea Launcher, Ship-Based Automated Launch and Recovery of REMUS AUV
+  [+] Match: Malaysia Orders Second Coast Guard Multi Purpose Mission Ship
+Processing: https://news.usni.org/feed
+  -> Found 30 entries. Filtering...
+Processing: https://www.defensenews.com/arc/outboundfeeds/rss/category/naval/?outputType=xml
+  -> Found 25 entries. Filtering...
+Processing: https://www.janes.com/feed
+Failed to fetch https://www.janes.com/feed: Status 404
+[*] Collection complete. Found 2 relevant articles.
+[Summarizer] Warning: GEMINI_API_KEY not found.
+[-] Processing: HII Successfully Demonstrates Sea Launcher, Ship-Based Automated Launch and Recovery of REMUS AUV
+   -> Failed to summarize. Skipping.
+[-] Processing: Malaysia Orders Second Coast Guard Multi Purpose Mission Ship
+   -> Failed to summarize. Skipping.
+[!] No cards generated. Exiting.
+[Finished] 2026-01-14  1:51:08.46 

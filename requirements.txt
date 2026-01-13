@@ -1,0 +1,7 @@
+google-generativeai
+feedparser
+beautifulsoup4
+requests
+jinja2
+python-dotenv
+python-dateutil

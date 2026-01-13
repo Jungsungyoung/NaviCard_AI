@@ -1,0 +1,44 @@
+name: NaviCard AI Daily Run
+
+on:
+  schedule:
+    # Every day at 7:00 AM KST (22:00 UTC previous day)
+    - cron: '0 22 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  run-navicard:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    
+    - name: Create .env file
+      run: |
+        echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> .env
+        echo "EMAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
+        echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
+        echo "RECIPIENT_EMAILS=${{ secrets.RECIPIENT_EMAILS }}" >> .env
+    
+    - name: Run NaviCard AI
+      run: |
+        python src/main.py
+    
+    - name: Upload Report Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: daily-report-${{ github.run_id }}
+        path: |
+          daily_report_debug.html
+          daily_report.json
+          images/

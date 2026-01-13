@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #003366;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #003366;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .date {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #eee;
+            display: block;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .source-badge {
+            background-color: #003366;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            float: right;
+        }
+
+        .headline {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #888;
+            margin-bottom: 4px;
+            margin-top: 12px;
+        }
+
+        .fact-box {
+            background-color: #f0f7ff;
+            border-left: 3px solid #003366;
+            padding: 10px;
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        .insight-box {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .btn-link {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #003366;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚓ NaviCard AI Daily Brief</h1>
+            <div class="date">{{ date_str }}</div>
+        </div>
+
+        {% for card in cards %}
+        <div class="card">
+            {% if card.image_url %}
+            <img src="{{ card.image_url }}" class="card-img" alt="Illustration">
+            {% endif %}
+            <div class="card-content">
+                <span class="source-badge">{{ card.source }}</span>
+                <h2 class="headline">{{ card.headline_kr }}</h2>
+
+                <div class="section-title">DEEP SUMMARY</div>
+                <div class="fact-box">
+                    {{ card.deep_summary_kr }}
+                </div>
+
+                <div class="section-title">TECHNICAL SPECS</div>
+                <div class="fact-box" style="background-color: #fff0f0; border-left-color: #cc0000;">
+                    {{ card.technical_specs_kr }}
+                </div>
+
+                <div class="section-title">STRATEGIC INSIGHT (For M&S/Control)</div>
+                <div class="insight-box">
+                    {{ card.strategic_insight_kr }}
+                </div>
+
+                <div style="text-align: right; margin-top: 10px;">
+                    <a href="{{ card.original_link }}" class="btn-link" target="_blank">원문 보러가기 →</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="footer">
+            <p>NaviCard AI System | Powered by Gemini 3 Flash Preview & 2.5 Flash Image</p>
+            <p>Data Sources: Naval News, USNI, Defense News</p>
+            <a href="mailto:contact@navicard.ai" style="color: #666;">추가 질문하기 (Ask to AI)</a>
+        </div>
+    </div>
+</body>
+
+</html>
