@@ -4,6 +4,7 @@ import sys
 import time
 from datetime import datetime
 import json
+import base64
 from dotenv import load_dotenv
 from jinja2 import Environment, FileSystemLoader
 
@@ -73,14 +74,16 @@ def main():
              if generated_image.startswith("http"):
                  summary_data['image_url'] = generated_image
              else:
-                 # It's a local path. Since the report is in root and images in images/, 
-                 # and generated_image comes as "images/foo.png" (from output_path arg)
-                 # We can use it directly.
-                 # Normalize slashes for HTML
-                 summary_data['image_url'] = generated_image.replace("\\", "/")
+                 # Convert local file to Base64 data URI for email embedding
+                 try:
+                     with open(generated_image, 'rb') as img_file:
+                         img_data = base64.b64encode(img_file.read()).decode('utf-8')
+                         summary_data['image_url'] = f"data:image/png;base64,{img_data}"
+                         print(f"    [Image] Converted to Base64 ({len(img_data)} chars)")
+                 except Exception as e:
+                     print(f"    [Image] Failed to encode: {e}")
+                     summary_data['image_url'] = "https://via.placeholder.com/600x300?text=Naval+Technology"
         else:
-             # Fallback or local file logic (omitted for serverless simplicity)
-             # Use a generic placeholder for now 
              summary_data['image_url'] = "https://via.placeholder.com/600x300?text=Naval+Technology"
 
         cards.append(summary_data)
